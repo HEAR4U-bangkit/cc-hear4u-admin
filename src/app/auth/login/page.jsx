@@ -5,8 +5,18 @@ import Image from "next/image";
 import { useLogin } from "@/hooks/useLogin";
 import { useFormik } from "formik";
 import Alert from "@/components/Alert";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const { push } = useRouter();
+  const [showAlert, setShowAlert] = useState({
+    isShow: false,
+    title: "",
+    message: "",
+    type: "error",
+  });
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -24,9 +34,19 @@ export default function Login() {
   const { mutate, isPending } = useLogin({
     onSuccess: (response) => {
       const result = response?.data?.data;
+
+      Cookies.set("token", JSON.stringify(result?.token));
+
+      push("/");
     },
     onError: (error) => {
       const result = error.response.data;
+
+      setShowAlert({
+        isShow: true,
+        title: "Terjadi Kesalahan",
+        message: result.message,
+      });
     },
   });
 
@@ -193,11 +213,13 @@ export default function Login() {
                   Sign In to Continue
                 </h2>
 
-                <Alert
-                  type={"error"}
-                  message={"Lorem ipsum dolot"}
-                  title={"title"}
-                />
+                {showAlert.isShow && (
+                  <Alert
+                    type={"error"}
+                    message={showAlert.message}
+                    title={showAlert.title}
+                  />
+                )}
 
                 <form onSubmit={formik.handleSubmit}>
                   <div className="mb-4 mt-3">
