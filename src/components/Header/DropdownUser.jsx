@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useGetProfile } from "@/hooks/useProfile";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -38,6 +39,11 @@ const DropdownUser = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
+  const token = Cookies.get("token");
+  const cleanedToken = token ? token.replace(/"/g, "") : null;
+
+  const { data } = useGetProfile(cleanedToken);
+
   const logout = () => {
     Cookies.remove("token");
 
@@ -54,9 +60,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {data?.data?.data.fullname}
           </span>
-          <span className="block text-xs text-body">UX Designer</span>
+          <span className="block text-xs text-body">Admin</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
