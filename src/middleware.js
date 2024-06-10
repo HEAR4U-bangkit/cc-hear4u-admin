@@ -5,7 +5,7 @@ export function middleware(request) {
   const token = request.cookies.get("token")?.value;
   const isLoggedIn = authGuard(token);
 
-  if (isLoggedIn && !request.nextUrl.pathname.startsWith("/dashboard")) {
+  if (isLoggedIn && request.nextUrl.pathname.startsWith("/auth/login")) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
