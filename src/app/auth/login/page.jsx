@@ -37,7 +37,7 @@ export default function Login() {
 
       Cookies.set("token", JSON.stringify(result?.token));
 
-      push("/");
+      push("/dashboard");
     },
     onError: (error) => {
       const result = error.response.data;
