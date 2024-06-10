@@ -1,56 +1,56 @@
-"use client"
-import React, { useEffect, useRef, useState } from "react"
-import { usePathname } from "next/navigation"
-import Link from "next/link"
-import Image from "next/image"
-import SidebarLinkGroup from "./SidebarLinkGroup"
+"use client";
+import React, { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import SidebarLinkGroup from "./SidebarLinkGroup";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
-  const trigger = useRef(null)
-  const sidebar = useRef(null)
+  const trigger = useRef(null);
+  const sidebar = useRef(null);
 
-  let storedSidebarExpanded = "true"
+  let storedSidebarExpanded = "true";
 
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
-  )
+  );
 
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
-      if (!sidebar.current || !trigger.current) return
+      if (!sidebar.current || !trigger.current) return;
       if (
         !sidebarOpen ||
         sidebar.current.contains(target) ||
         trigger.current.contains(target)
       )
-        return
-      setSidebarOpen(false)
-    }
-    document.addEventListener("click", clickHandler)
-    return () => document.removeEventListener("click", clickHandler)
-  })
+        return;
+      setSidebarOpen(false);
+    };
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
+  });
 
   // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ key }) => {
-      if (!sidebarOpen || key !== "Escape") return
-      setSidebarOpen(false)
-    }
-    document.addEventListener("keydown", keyHandler)
-    return () => document.removeEventListener("keydown", keyHandler)
-  })
+      if (!sidebarOpen || key !== "Escape") return;
+      setSidebarOpen(false);
+    };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  });
 
   useEffect(() => {
-    localStorage.setItem("sidebar-expanded", sidebarExpanded.toString())
+    localStorage.setItem("sidebar-expanded", sidebarExpanded.toString());
     if (sidebarExpanded) {
-      document.querySelector("body")?.classList.add("sidebar-expanded")
+      document.querySelector("body")?.classList.add("sidebar-expanded");
     } else {
-      document.querySelector("body")?.classList.remove("sidebar-expanded")
+      document.querySelector("body")?.classList.remove("sidebar-expanded");
     }
-  }, [sidebarExpanded])
+  }, [sidebarExpanded]);
 
   return (
     <aside
@@ -108,10 +108,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Calendar --> */}
               <li>
                 <Link
-                  href="/calendar"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes(
-                    "calendar"
-                  ) && "bg-graydark dark:bg-meta-4"}`}
+                  href="/users"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("calendar") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
                 >
                   <svg
                     className="fill-current"
@@ -143,9 +144,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               <li>
                 <Link
                   href="/chart"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes(
-                    "chart"
-                  ) && "bg-graydark dark:bg-meta-4"}`}
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("chart") && "bg-graydark dark:bg-meta-4"
+                  }`}
                 >
                   <svg
                     className="fill-current"
@@ -190,15 +191,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <React.Fragment>
                       <Link
                         href="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname ===
-                          "/ui" ||
-                          pathname.includes("ui")) &&
-                          "bg-graydark dark:bg-meta-4"}`}
-                        onClick={e => {
-                          e.preventDefault()
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                          (pathname === "/ui" || pathname.includes("ui")) &&
+                          "bg-graydark dark:bg-meta-4"
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
                           sidebarExpanded
                             ? handleClick()
-                            : setSidebarExpanded(true)
+                            : setSidebarExpanded(true);
                         }}
                       >
                         <svg
@@ -236,8 +237,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         </svg>
                         UI Elements
                         <svg
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open &&
-                            "rotate-180"}`}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                            open && "rotate-180"
+                          }`}
                           width="20"
                           height="20"
                           viewBox="0 0 20 20"
@@ -254,15 +256,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
-                        className={`translate transform overflow-hidden ${!open &&
-                          "hidden"}`}
+                        className={`translate transform overflow-hidden ${
+                          !open && "hidden"
+                        }`}
                       >
                         <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
                           <li>
                             <Link
                               href="/ui/alerts"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname ===
-                                "/ui/alerts" && "text-white"}`}
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/ui/alerts" && "text-white"
+                              }`}
                             >
                               Alerts
                             </Link>
@@ -270,8 +274,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           <li>
                             <Link
                               href="/ui/buttons"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname ===
-                                "/ui/buttons" && "text-white"}`}
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/ui/buttons" && "text-white"
+                              }`}
                             >
                               Buttons
                             </Link>
@@ -280,7 +285,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       </div>
                       {/* <!-- Dropdown Menu End --> */}
                     </React.Fragment>
-                  )
+                  );
                 }}
               </SidebarLinkGroup>
               {/* <!-- Menu Item Ui Elements --> */}
@@ -296,15 +301,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     <React.Fragment>
                       <Link
                         href="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname ===
-                          "/auth" ||
-                          pathname.includes("auth")) &&
-                          "bg-graydark dark:bg-meta-4"}`}
-                        onClick={e => {
-                          e.preventDefault()
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                          (pathname === "/auth" || pathname.includes("auth")) &&
+                          "bg-graydark dark:bg-meta-4"
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
                           sidebarExpanded
                             ? handleClick()
-                            : setSidebarExpanded(true)
+                            : setSidebarExpanded(true);
                         }}
                       >
                         <svg
@@ -338,8 +343,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         </svg>
                         Authentication
                         <svg
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open &&
-                            "rotate-180"}`}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                            open && "rotate-180"
+                          }`}
                           width="20"
                           height="20"
                           viewBox="0 0 20 20"
@@ -356,15 +362,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       </Link>
                       {/* <!-- Dropdown Menu Start --> */}
                       <div
-                        className={`translate transform overflow-hidden ${!open &&
-                          "hidden"}`}
+                        className={`translate transform overflow-hidden ${
+                          !open && "hidden"
+                        }`}
                       >
                         <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
                           <li>
                             <Link
                               href="/auth/signin"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname ===
-                                "/auth/signin" && "text-white"}`}
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/auth/signin" && "text-white"
+                              }`}
                             >
                               Sign In
                             </Link>
@@ -372,8 +380,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           <li>
                             <Link
                               href="/auth/signup"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname ===
-                                "/auth/signup" && "text-white"}`}
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/auth/signup" && "text-white"
+                              }`}
                             >
                               Sign Up
                             </Link>
@@ -382,7 +391,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       </div>
                       {/* <!-- Dropdown Menu End --> */}
                     </React.Fragment>
-                  )
+                  );
                 }}
               </SidebarLinkGroup>
               {/* <!-- Menu Item Auth Pages --> */}
@@ -392,7 +401,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         {/* <!-- Sidebar Menu --> */}
       </div>
     </aside>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
