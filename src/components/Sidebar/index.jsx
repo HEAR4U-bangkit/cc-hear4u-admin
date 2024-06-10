@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
+import SidebarLinkGroup from "./SidebarLinkGroup"
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const pathname = usePathname()
