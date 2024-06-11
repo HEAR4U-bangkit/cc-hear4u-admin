@@ -1,28 +1,28 @@
 "use client";
 import Breadcrumb from "@/components/Breadcrumb";
+import Modal from "@/components/Modal";
 import Table from "@/components/Table";
 import TableAction from "@/components/Table/TableAction";
-import React from "react";
+import React, { useState } from "react";
 
 export default function User() {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
   const headers = [
-    {
-      title: "Id",
-    },
     {
       title: "Fullname",
     },
     {
       title: "Email",
     },
-    {
-      title: "Role",
-    },
   ];
 
   const data = [
-    { id: "1", name: "John Doe", email: "john@example.com", role: "Admin" },
-    { id: "2", name: "Jane Smith", email: "jane@example.com", role: "User" },
+    { name: "John Doe", email: "john@example.com" },
+    { name: "Jane Smith", email: "jane@example.com" },
   ];
 
   const actions = (user) => (
@@ -99,14 +99,38 @@ export default function User() {
             />
           </svg>
         }
-        action={() => console.log(`Delete ${user.id}`)}
+        action={() => openModal()}
       />
     </>
   );
 
+  const modalActions = [
+    {
+      label: "Cancel",
+      onClick: closeModal,
+      primary: false,
+    },
+    {
+      label: "Delete",
+      onClick: () => {
+        // delete data
+        // refetch
+        closeModal();
+      },
+      primary: true,
+    },
+  ];
+
   return (
     <React.Fragment>
       <Breadcrumb pageName={"Users"} />
+      <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        title={"Delete data"}
+        content={"Are you sure want to delete this data?"}
+        actions={modalActions}
+      />
       <div className="flex flex-col gap-10">
         <Table headers={headers} data={data} action={actions} />
       </div>
