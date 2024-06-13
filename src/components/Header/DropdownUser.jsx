@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useGetProfile } from "@/hooks/useProfile";
+import { useGetToken, useRemoveToken } from "@/hooks/useToken";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -39,13 +39,12 @@ const DropdownUser = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
-  const token = Cookies.get("token");
-  const cleanedToken = token ? token.replace(/"/g, "") : null;
+  const token = useGetToken();
 
-  const { data } = useGetProfile(cleanedToken);
+  const { data } = useGetProfile(token);
 
   const logout = () => {
-    Cookies.remove("token");
+    useRemoveToken();
 
     push("/auth/login");
   };
