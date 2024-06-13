@@ -1,13 +1,24 @@
 "use client";
+import Image from "next/image";
 import React from "react";
-import Spinner from "../Spinner";
 
 export default function TBody({ data, action, fields }) {
-  const renderField = (field) => {
-    if (typeof field === "object" && field !== null) {
-      return JSON.stringify(field);
+  const renderField = (field, value) => {
+    if (field === "thumbnail") {
+      return (
+        <Image
+          src={value}
+          alt="Thumbnail"
+          className="h-16 w-16 object-cover rounded-md"
+          width={60}
+          height={60}
+        />
+      );
     }
-    return field;
+    if (typeof value === "object" && value !== null) {
+      return JSON.stringify(value);
+    }
+    return value;
   };
 
   return (
@@ -20,7 +31,7 @@ export default function TBody({ data, action, fields }) {
               className="border-b border-[#eee] px-4 py-5 dark:border-strokedark"
             >
               <p className="text-black dark:text-white">
-                {renderField(item[field])}
+                {renderField(field, item[field])}
               </p>
             </td>
           ))}
