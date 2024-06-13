@@ -1,17 +1,27 @@
-"use client"
+"use client";
 import React from "react";
+import Spinner from "../Spinner";
 
-export default function TBody({ data, action }) {
+export default function TBody({ data, action, fields }) {
+  const renderField = (field) => {
+    if (typeof field === "object" && field !== null) {
+      return JSON.stringify(field);
+    }
+    return field;
+  };
+
   return (
     <tbody>
-      {data.map((item, key) => (
+      {data?.map((item, key) => (
         <tr key={key}>
-          {Object.keys(item).map((field, i) => (
+          {fields.map((field, i) => (
             <td
               key={i}
               className="border-b border-[#eee] px-4 py-5 dark:border-strokedark"
             >
-              <p className="text-black dark:text-white">{item[field]}</p>
+              <p className="text-black dark:text-white">
+                {renderField(item[field])}
+              </p>
             </td>
           ))}
           <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">

@@ -1,16 +1,35 @@
 import React from "react";
 import Thead from "./Thead";
 import TBody from "./TBody";
+import Spinner from "../Spinner";
 
-export default function Table({ headers, data, action }) {
+export default function Table({ headers, data, action, fields, isLoading }) {
   return (
-    <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <div className="max-w-full overflow-x-auto">
-        <table className="w-full table-auto">
-          <Thead data={headers} />
-          <TBody data={data} action={action} />
-        </table>
-      </div>
+    <div className="max-w-full overflow-x-auto">
+      <table className="w-full table-auto">
+        <Thead data={headers} />
+        {isLoading ? (
+          <tbody>
+            <tr>
+              <td
+                className="border-b border-[#eee] px-4 py-5"
+                colSpan={headers.length + 1}
+              >
+                <div className="flex justify-center items-center">
+                  <Spinner />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        ) : (
+          <TBody
+            data={data}
+            action={action}
+            fields={fields}
+            isLoading={isLoading}
+          />
+        )}
+      </table>
     </div>
   );
 }
