@@ -42,7 +42,7 @@ export default function UpdateArticle({ params }) {
   useEffect(() => {
     if (data) {
       formik.setValues({
-        title: data.data.data.fullname,
+        title: data.data.data.title,
         thumbnail: data.data.data.thumbnail,
         content: data.data.data.content,
         publishedAt: data.data.data.publishedAt,
