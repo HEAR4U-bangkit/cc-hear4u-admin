@@ -1,17 +1,14 @@
 "use client";
-import Image from "next/image";
 import React from "react";
 
 export default function TBody({ data, action, fields }) {
   const renderField = (field, value) => {
     if (field === "thumbnail") {
       return (
-        <Image
+        <img
           src={value}
           alt="Thumbnail"
           className="h-16 w-16 object-cover rounded-md"
-          width={60}
-          height={60}
         />
       );
     }
