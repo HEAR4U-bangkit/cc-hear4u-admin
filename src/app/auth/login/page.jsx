@@ -35,9 +35,17 @@ export default function Login() {
     onSuccess: (response) => {
       const result = response?.data?.data;
 
-      Cookies.set("token", JSON.stringify(result?.token));
+      if (result.user.role.name !== "admin") {
+        setShowAlert({
+          isShow: true,
+          title: "Terjadi Kesalahan",
+          message: "Kredensial tidak valid!",
+        });
+      } else {
+        Cookies.set("token", JSON.stringify(result?.token));
 
-      push("/dashboard");
+        push("/dashboard");
+      }
     },
     onError: (error) => {
       const result = error.response.data;
@@ -67,7 +75,7 @@ export default function Login() {
                   />
                   <Image
                     className="dark:hidden"
-                    src={"/images/logo/logo-dark.svg"}
+                    src={"/images/app-logo/logo2.svg"}
                     alt="Logo"
                     width={176}
                     height={32}
@@ -75,8 +83,7 @@ export default function Login() {
                 </Link>
 
                 <p className="2xl:px-20 text-body">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                  suspendisse.
+                  Bridging to Interact with the World
                 </p>
 
                 <span className="mt-15 inline-block">
