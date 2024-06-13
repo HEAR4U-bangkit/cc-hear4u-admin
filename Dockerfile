@@ -14,6 +14,10 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
+ENV NEXT_PUBLIC_TYPE prod
+ENV NEXT_PUBLIC_API_DEV_URL http://127.0.0.1:8000
+ENV NEXT_PUBLIC_API_URL https://hear4u-server-jhau35ht6q-et.a.run.app
+
 RUN npm run build
 
 FROM base AS runner
