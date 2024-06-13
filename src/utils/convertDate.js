@@ -1,7 +1,7 @@
 import moment from "moment";
 
-export default function convertDate() {
-  const formattedDate = moment(isoDate).format("DD-MM-YYYY");
+export default function convertDate(isoDate) {
+  const formattedDate = moment(isoDate).format("DD-MM-YYYY HH:mm:ss");
 
   return formattedDate;
 }
