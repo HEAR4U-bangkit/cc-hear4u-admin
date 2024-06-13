@@ -1,15 +1,54 @@
 "use client";
+import Alert from "@/components/Alert";
 import Breadcrumb from "@/components/Breadcrumb";
+import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 import Table from "@/components/Table";
 import TableAction from "@/components/Table/TableAction";
+import { useDeleteUser, useGetAllUsers } from "@/hooks/useProfile";
+import { useGetToken } from "@/hooks/useToken";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function User() {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [showAlert, setShowAlert] = useState({
+    isShow: false,
+    title: "",
+    message: "",
+    type: "error",
+  });
 
-  const openModal = () => setModalOpen(true);
+  const { push } = useRouter();
+
+  const openModal = (user) => {
+    setSelectedUser(user);
+    setModalOpen(true);
+  };
   const closeModal = () => setModalOpen(false);
+
+  const token = useGetToken();
+
+  const { data, isLoading, refetch } = useGetAllUsers(token);
+
+  const { mutate } = useDeleteUser({
+    onSuccess: () => {
+      refetch();
+    },
+    onError: (error) => {
+      const result = error.response.data;
+
+      setShowAlert({
+        isShow: true,
+        title: "Terjadi Kesalahan",
+        message: result.message,
+      });
+    },
+  });
+
+  const fields = ["fullname", "email"];
 
   const headers = [
     {
@@ -18,11 +57,6 @@ export default function User() {
     {
       title: "Email",
     },
-  ];
-
-  const data = [
-    { name: "John Doe", email: "john@example.com" },
-    { name: "Jane Smith", email: "jane@example.com" },
   ];
 
   const actions = (user) => (
@@ -47,29 +81,7 @@ export default function User() {
             />
           </svg>
         }
-        action={() => console.log(`View ${user.id}`)}
-      />
-      <TableAction
-        icon={
-          <svg
-            className="fill-current"
-            width="18"
-            height="18"
-            viewBox="0 0 18 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M16.8754 11.6719C16.5379 11.6719 16.2285 11.9531 16.2285 12.3187V14.8219C16.2285 15.075 16.0316 15.2719 15.7785 15.2719H2.22227C1.96914 15.2719 1.77227 15.075 1.77227 14.8219V12.3187C1.77227 11.9812 1.49102 11.6719 1.12539 11.6719C0.759766 11.6719 0.478516 11.9531 0.478516 12.3187V14.8219C0.478516 15.7781 1.23789 16.5375 2.19414 16.5375H15.7785C16.7348 16.5375 17.4941 15.7781 17.4941 14.8219V12.3187C17.5223 11.9531 17.2129 11.6719 16.8754 11.6719Z"
-              fill=""
-            />
-            <path
-              d="M8.55074 12.3469C8.66324 12.4594 8.83199 12.5156 9.00074 12.5156C9.16949 12.5156 9.31012 12.4594 9.45074 12.3469L13.4726 8.43752C13.7257 8.1844 13.7257 7.79065 13.5007 7.53752C13.2476 7.2844 12.8539 7.2844 12.6007 7.5094L9.64762 10.4063V2.1094C9.64762 1.7719 9.36637 1.46252 9.00074 1.46252C8.66324 1.46252 8.35387 1.74377 8.35387 2.1094V10.4063L5.40074 7.53752C5.14762 7.2844 4.75387 7.31252 4.50074 7.53752C4.24762 7.79065 4.27574 8.1844 4.50074 8.43752L8.55074 12.3469Z"
-              fill=""
-            />
-          </svg>
-        }
-        action={() => console.log(`Edit ${user.id}`)}
+        action={() => push(`/users/${user.id}`)}
       />
       <TableAction
         icon={
@@ -99,7 +111,7 @@ export default function User() {
             />
           </svg>
         }
-        action={() => openModal()}
+        action={() => openModal(user)}
       />
     </>
   );
@@ -113,9 +125,11 @@ export default function User() {
     {
       label: "Delete",
       onClick: () => {
-        // delete data
-        // refetch
-        closeModal();
+        if (selectedUser) {
+          mutate({ token, userId: selectedUser.id });
+
+          closeModal();
+        }
       },
       primary: true,
     },
@@ -132,7 +146,27 @@ export default function User() {
         actions={modalActions}
       />
       <div className="flex flex-col gap-10">
-        <Table headers={headers} data={data} action={actions} />
+        {showAlert.isShow && (
+          <Alert
+            type={"error"}
+            message={showAlert.message}
+            title={showAlert.title}
+          />
+        )}
+        <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+          <div className="flex justify-end mb-6">
+            <Link href={"/users/create"}>
+              <Button text={"Create User"} />
+            </Link>
+          </div>
+          <Table
+            headers={headers}
+            data={data?.data?.data}
+            action={actions}
+            fields={fields}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
     </React.Fragment>
   );
