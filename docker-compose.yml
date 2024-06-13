@@ -1,0 +1,5 @@
+services:
+  hear4u-admin:
+    build: .
+    ports:
+      - "3000:3000"

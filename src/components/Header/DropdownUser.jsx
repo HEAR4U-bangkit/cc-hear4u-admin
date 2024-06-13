@@ -1,38 +1,53 @@
-import { useEffect, useRef, useState } from "react"
-import Link from "next/link"
-import Image from "next/image"
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useGetProfile } from "@/hooks/useProfile";
+import { useGetToken, useRemoveToken } from "@/hooks/useToken";
 
 const DropdownUser = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const trigger = useRef(null)
-  const dropdown = useRef(null)
+  const trigger = useRef(null);
+  const dropdown = useRef(null);
+
+  const { push } = useRouter();
 
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
-      if (!dropdown.current) return
+      if (!dropdown.current) return;
       if (
         !dropdownOpen ||
         dropdown.current.contains(target) ||
         trigger.current.contains(target)
       )
-        return
-      setDropdownOpen(false)
-    }
-    document.addEventListener("click", clickHandler)
-    return () => document.removeEventListener("click", clickHandler)
-  })
+        return;
+      setDropdownOpen(false);
+    };
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
+  });
 
   // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }) => {
-      if (!dropdownOpen || keyCode !== 27) return
-      setDropdownOpen(false)
-    }
-    document.addEventListener("keydown", keyHandler)
-    return () => document.removeEventListener("keydown", keyHandler)
-  })
+      if (!dropdownOpen || keyCode !== 27) return;
+      setDropdownOpen(false);
+    };
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
+  });
+
+  const token = useGetToken();
+
+  const { data } = useGetProfile(token);
+
+  const logout = () => {
+    useRemoveToken();
+
+    push("/auth/login");
+  };
 
   return (
     <div className="relative">
@@ -44,9 +59,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {data?.data?.data.fullname}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs text-body">Admin</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
@@ -56,7 +71,7 @@ const DropdownUser = () => {
             src={"/images/user/user-01.png"}
             style={{
               width: "auto",
-              height: "auto"
+              height: "auto",
             }}
             alt="User"
           />
@@ -84,7 +99,7 @@ const DropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ${
+        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark text-body ${
           dropdownOpen === true ? "block" : "hidden"
         }`}
       >
@@ -161,7 +176,10 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button
+          className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+          onClick={() => logout()}
+        >
           <svg
             className="fill-current"
             width="22"
@@ -184,7 +202,7 @@ const DropdownUser = () => {
       </div>
       {/* <!-- Dropdown End --> */}
     </div>
-  )
-}
+  );
+};
 
-export default DropdownUser
+export default DropdownUser;
