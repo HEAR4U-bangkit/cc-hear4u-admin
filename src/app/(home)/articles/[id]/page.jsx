@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import ErrorPage from "@/components/ErrorPage";
 import DatePicker from "@/components/Input/DatePicker";
 import FileInput from "@/components/Input/FileInput";
+import TextArea from "@/components/Input/TextArea";
 import InputGroup from "@/components/InputGroup";
 import Spinner from "@/components/Spinner";
 import { useGetOneArticle, useUpdateArticle } from "@/hooks/useArticle";
@@ -136,13 +137,12 @@ export default function UpdateArticle({ params }) {
                   placeholder="Enter the thumbnail"
                 />
 
-                <InputGroup
+                <TextArea
                   label={"Content"}
-                  type="text"
                   name="content"
                   onChange={handleChange}
-                  value={formik.values.content}
                   placeholder="Enter the content of article"
+                  value={formik.values.content}
                 />
 
                 <DatePicker

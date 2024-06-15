@@ -4,6 +4,7 @@ import Breadcrumb from "@/components/Breadcrumb";
 import Button from "@/components/Button";
 import DatePicker from "@/components/Input/DatePicker";
 import FileInput from "@/components/Input/FileInput";
+import TextArea from "@/components/Input/TextArea";
 import InputGroup from "@/components/InputGroup";
 import { useCreateArticle } from "@/hooks/useArticle";
 import { useGetToken } from "@/hooks/useToken";
@@ -106,9 +107,8 @@ export default function CreateArticle() {
                 placeholder="Enter the thumbnail"
               />
 
-              <InputGroup
+              <TextArea
                 label={"Content"}
-                type="text"
                 name="content"
                 onChange={handleChange}
                 placeholder="Enter the content of article"
