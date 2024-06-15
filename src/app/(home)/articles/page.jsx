@@ -50,14 +50,14 @@ export default function Articles() {
     },
   });
 
-  const fields = ["title", "thumbnail", "content", "publishedAt"];
+  const fields = ["thumbnail", "title", "content", "publishedAt"];
 
   const headers = [
     {
-      title: "Title",
+      title: "Thumbnail",
     },
     {
-      title: "Thumbnail",
+      title: "Title",
     },
     {
       title: "Content",
