@@ -17,7 +17,7 @@ export default function LatestArticleCard({ articles }) {
             className="flex items-center gap-5 px-7.5 py-3 hover:bg-gray-3 dark:hover:bg-meta-4"
             key={key}
           >
-            <div className="relative h-14 w-14 rounded-full">
+            <div className="relative h-14 w-14 rounded-full items-center flex">
               <Image
                 width={56}
                 height={56}
@@ -30,7 +30,6 @@ export default function LatestArticleCard({ articles }) {
                 className="rounded-lg"
               />
             </div>
-
             <div className="flex flex-1 items-center justify-between">
               <div>
                 <h5 className="font-medium text-black dark:text-white">
