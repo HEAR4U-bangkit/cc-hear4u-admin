@@ -14,7 +14,6 @@ export const useGetAllArticles = (token) => {
   });
 };
 
-
 export const useGetOneArticle = (articleId, token) => {
   return useQuery({
     queryKey: [`article-${articleId}`],
@@ -30,7 +29,7 @@ export const useGetOneArticle = (articleId, token) => {
 
 export const useCreateArticle = ({ onSuccess, onError }) => {
   return useMutation({
-    mutationFn: async (token, body) => {
+    mutationFn: async ({ token, body }) => {
       return await axiosInstance.post("/articles", body, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -44,7 +43,7 @@ export const useCreateArticle = ({ onSuccess, onError }) => {
 
 export const useUpdateArticle = ({ onSuccess, onError }) => {
   return useMutation({
-    mutationFn: async (token, articleId, body) => {
+    mutationFn: async ({ token, articleId, body }) => {
       return await axiosInstance.put(`/articles/${articleId}`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -58,7 +57,7 @@ export const useUpdateArticle = ({ onSuccess, onError }) => {
 
 export const useDeleteArticle = ({ onSuccess, onError }) => {
   return useMutation({
-    mutationFn: async (token, articleId) => {
+    mutationFn: async ({ token, articleId }) => {
       return await axiosInstance.delete(`/articles/${articleId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
