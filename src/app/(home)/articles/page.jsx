@@ -33,7 +33,7 @@ export default function Articles() {
 
   const token = useGetToken();
 
-  const { data, isLoading, refetch } = useGetAllArticles(token);
+  const { data, isLoading, isRefetching, refetch } = useGetAllArticles(token);
 
   const { mutate } = useDeleteArticle({
     onSuccess: () => {
@@ -50,14 +50,14 @@ export default function Articles() {
     },
   });
 
-  const fields = ["title", "thumbnail", "content", "publishedAt"];
+  const fields = ["thumbnail", "title", "content", "publishedAt"];
 
   const headers = [
     {
-      title: "Title",
+      title: "Thumbnail",
     },
     {
-      title: "Thumbnail",
+      title: "Title",
     },
     {
       title: "Content",
@@ -140,7 +140,7 @@ export default function Articles() {
       label: "Delete",
       onClick: () => {
         if (selectedArticle) {
-          mutate({ token, userId: selectedArticle.id });
+          mutate({ token, articleId: selectedArticle.id });
 
           closeModal();
         }
@@ -180,6 +180,7 @@ export default function Articles() {
             action={actions}
             fields={fields}
             isLoading={isLoading}
+            isRefetching={isRefetching}
           />
         </div>
       </div>

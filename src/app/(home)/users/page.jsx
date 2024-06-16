@@ -31,7 +31,7 @@ export default function User() {
 
   const token = useGetToken();
 
-  const { data, isLoading, refetch } = useGetAllUsers(token);
+  const { data, isLoading, isRefetching, refetch } = useGetAllUsers(token);
 
   const { mutate } = useDeleteUser({
     onSuccess: () => {
@@ -165,6 +165,7 @@ export default function User() {
             action={actions}
             fields={fields}
             isLoading={isLoading}
+            isRefetching={isRefetching}
           />
         </div>
       </div>

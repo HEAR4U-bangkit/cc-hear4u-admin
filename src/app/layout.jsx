@@ -2,6 +2,7 @@
 import { Inter } from "next/font/google";
 import InitProvider from "@/utils/QueryProvider";
 import "./globals.css";
+import "flatpickr/dist/flatpickr.min.css";
 import "@/css/satoshi.css";
 
 const inter = Inter({ subsets: ["latin"] });

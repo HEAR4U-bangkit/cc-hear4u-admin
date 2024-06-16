@@ -3,10 +3,14 @@ import Alert from "@/components/Alert";
 import Breadcrumb from "@/components/Breadcrumb";
 import Button from "@/components/Button";
 import ErrorPage from "@/components/ErrorPage";
+import DatePicker from "@/components/Input/DatePicker";
+import FileInput from "@/components/Input/FileInput";
+import TextArea from "@/components/Input/TextArea";
 import InputGroup from "@/components/InputGroup";
 import Spinner from "@/components/Spinner";
 import { useGetOneArticle, useUpdateArticle } from "@/hooks/useArticle";
 import { useGetToken } from "@/hooks/useToken";
+import formatDate from "@/utils/formatDate";
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -30,28 +34,42 @@ export default function UpdateArticle({ params }) {
   const formik = useFormik({
     initialValues: {
       title: "",
-      thumbnail: "",
+      thumbnail: null,
       content: "",
       publishedAt: "",
     },
-    onSubmit: () => {
-      mutate({ token, userId: id, body: formik.values });
+    onSubmit: (values) => {
+      const formData = new FormData();
+
+      for (const key in values) {
+        if (key === "thumbnail" && values[key] === null) continue;
+        formData.append(key, values[key]);
+      }
+
+      mutate({ token, articleId: id, body: formData });
     },
   });
 
   useEffect(() => {
     if (data) {
       formik.setValues({
-        title: data.data.data.title,
-        thumbnail: data.data.data.thumbnail,
-        content: data.data.data.content,
-        publishedAt: data.data.data.publishedAt,
+        title: data?.data?.data?.title,
+        thumbnail: null,
+        content: data?.data?.data?.content,
+        publishedAt: data?.data?.data?.publishedAt,
       });
     }
   }, [data]);
 
   const handleChange = (e) => {
-    formik.setFieldValue(e.target.name, e.target.value);
+    const { name, value } = e.target;
+    let formattedValue = value;
+
+    if (name === "publishedAt") {
+      formattedValue = formatDate(value);
+    }
+
+    formik.setFieldValue(name, formattedValue);
   };
 
   // mutation here, handle success and error
@@ -77,14 +95,13 @@ export default function UpdateArticle({ params }) {
 
   return (
     <React.Fragment>
-      <Breadcrumb pageName="Update User" />
+      <Breadcrumb pageName={"Update Article"} />
 
       <div className="flex flex-col gap-9">
-        {/* <!-- Sign Up Form --> */}
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
             <h3 className="font-medium text-black dark:text-white">
-              Update User
+              Update Article
             </h3>
           </div>
           {showAlert.isShow && (
@@ -110,31 +127,29 @@ export default function UpdateArticle({ params }) {
                   placeholder="Enter the article title"
                 />
 
-                <InputGroup
+                <FileInput
                   label={"Thumbnail"}
-                  type="text"
+                  type="file"
                   name="thumbnail"
-                  onChange={handleChange}
-                  value={formik.values.thumbnail}
+                  onChange={(e) =>
+                    formik.setFieldValue("thumbnail", e.target.files[0])
+                  }
                   placeholder="Enter the thumbnail"
                 />
 
-                <InputGroup
+                <TextArea
                   label={"Content"}
-                  type="text"
                   name="content"
                   onChange={handleChange}
-                  value={formik.values.content}
                   placeholder="Enter the content of article"
+                  value={formik.values.content}
                 />
 
-                <InputGroup
+                <DatePicker
                   label={"Published At"}
-                  type="text"
                   name="publishedAt"
                   onChange={handleChange}
                   value={formik.values.publishedAt}
-                  placeholder="Enter the Published At"
                 />
 
                 <div className="flex gap-4 justify-end">

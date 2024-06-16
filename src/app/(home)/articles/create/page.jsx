@@ -2,9 +2,13 @@
 import Alert from "@/components/Alert";
 import Breadcrumb from "@/components/Breadcrumb";
 import Button from "@/components/Button";
+import DatePicker from "@/components/Input/DatePicker";
+import FileInput from "@/components/Input/FileInput";
+import TextArea from "@/components/Input/TextArea";
 import InputGroup from "@/components/InputGroup";
 import { useCreateArticle } from "@/hooks/useArticle";
 import { useGetToken } from "@/hooks/useToken";
+import formatDate from "@/utils/formatDate";
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -39,17 +43,30 @@ export default function CreateArticle() {
   const formik = useFormik({
     initialValues: {
       title: "",
-      thumbnail: "",
+      thumbnail: null,
       content: "",
       publishedAt: "",
     },
-    onSubmit: () => {
-      mutate({ token, body: formik.values });
+    onSubmit: (values) => {
+      const formData = new FormData();
+
+      for (const key in values) {
+        formData.append(key, values[key]);
+      }
+
+      mutate({ token, body: formData });
     },
   });
 
   const handleChange = (e) => {
-    formik.setFieldValue(e.target.name, e.target.value);
+    const { name, value } = e.target;
+    let formattedValue = value;
+
+    if (name === "publishedAt") {
+      formattedValue = formatDate(value);
+    }
+
+    formik.setFieldValue(name, formattedValue);
   };
 
   return (
@@ -80,28 +97,27 @@ export default function CreateArticle() {
                 placeholder="Enter the article title"
               />
 
-              <InputGroup
+              <FileInput
                 label={"Thumbnail"}
-                type="text"
+                type="file"
                 name="thumbnail"
-                onChange={handleChange}
+                onChange={(e) =>
+                  formik.setFieldValue("thumbnail", e.target.files[0])
+                }
                 placeholder="Enter the thumbnail"
               />
 
-              <InputGroup
+              <TextArea
                 label={"Content"}
-                type="text"
                 name="content"
                 onChange={handleChange}
                 placeholder="Enter the content of article"
               />
 
-              <InputGroup
+              <DatePicker
                 label={"Published At"}
-                type="text"
                 name="publishedAt"
                 onChange={handleChange}
-                placeholder="Enter the Published At"
               />
 
               <div className="flex gap-4 justify-end">

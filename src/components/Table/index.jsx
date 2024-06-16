@@ -3,12 +3,19 @@ import Thead from "./Thead";
 import TBody from "./TBody";
 import Spinner from "../Spinner";
 
-export default function Table({ headers, data, action, fields, isLoading }) {
+export default function Table({
+  headers,
+  data,
+  action,
+  fields,
+  isLoading,
+  isRefetching,
+}) {
   return (
     <div className="max-w-full overflow-x-auto">
       <table className="w-full table-auto">
         <Thead data={headers} />
-        {isLoading ? (
+        {isLoading || isRefetching ? (
           <tbody>
             <tr>
               <td
