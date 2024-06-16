@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import limitString from "@/utils/limitString";
 import convertDate from "@/utils/convertDate";
 
@@ -18,7 +17,7 @@ export default function LatestArticleCard({ articles }) {
             key={key}
           >
             <div className="relative h-14 w-14 rounded-full items-center flex">
-              <Image
+              <img
                 width={56}
                 height={56}
                 src={article.thumbnail}
