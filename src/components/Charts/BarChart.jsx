@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
-import ReactApexChart from "react-apexcharts";
+// import ReactApexChart from "react-apexcharts";
+import dynamic from "next/dynamic";
 
 export default function ChartTwo({ articlesPerMonth }) {
+  const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+    ssr: false,
+  });
+
   const [chartData, setChartData] = useState({
     series: [
       {
