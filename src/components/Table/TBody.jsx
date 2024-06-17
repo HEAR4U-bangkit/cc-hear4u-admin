@@ -22,6 +22,9 @@ export default function TBody({ data, action, fields }) {
     <tbody>
       {data?.map((item, key) => (
         <tr key={key}>
+          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+            <div className="flex items-center space-x-3.5">{key + 1}</div>
+          </td>
           {fields.map((field, i) => (
             <td
               key={i}
