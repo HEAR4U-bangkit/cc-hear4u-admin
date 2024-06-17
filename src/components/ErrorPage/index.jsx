@@ -7,7 +7,7 @@ export default function ErrorPage() {
     <div className="rounded-sm border border-stroke bg-white px-5 py-10 shadow-default dark:border-strokedark dark:bg-boxdark sm:py-20">
       <div className="mx-auto max-w-[410px]">
         <Image
-          src={"/images/illustration/illustration-01.svg"}
+          src={"/images/illustration/error.svg"}
           alt="illustration"
           width={400}
           height={400}
