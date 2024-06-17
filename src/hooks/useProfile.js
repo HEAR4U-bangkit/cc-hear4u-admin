@@ -37,6 +37,7 @@ export const useGetOneUser = (userId, token) => {
         },
       });
     },
+    enabled: !!userId,
   });
 };
 
@@ -72,6 +73,20 @@ export const useDeleteUser = ({ onSuccess, onError }) => {
   return useMutation({
     mutationFn: async ({ token, userId }) => {
       return await axiosInstance.delete(`/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    },
+    onSuccess,
+    onError,
+  });
+};
+
+export const useUpdatePassword = ({ onSuccess, onError }) => {
+  return useMutation({
+    mutationFn: async ({ token, userId, body }) => {
+      return await axiosInstance.put(`/password/${userId}`, body, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
