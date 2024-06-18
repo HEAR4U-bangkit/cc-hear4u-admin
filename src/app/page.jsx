@@ -5,6 +5,7 @@ import TeamCard from "@/components/TeamCard";
 import Link from "next/link";
 import React, { useState } from "react";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const cardData = [
@@ -69,6 +70,12 @@ export default function Home() {
   const handleToggle = () => {
     setIsNavOpen(!isNavOpen);
   };
+
+  const title = "Empowering Communication for the Hearing Impaired".split(" ");
+  const subTitle =
+    "Visual sound recognition for improved social interactions and independence".split(
+      " "
+    );
 
   return (
     <React.Fragment>
@@ -151,25 +158,58 @@ export default function Home() {
           id="hero"
           className="h-screen flex justify-center items-center w-full px-5 md:px-20 lg:px-50 md:justify-between gap-4 lg:gap-24 bg-white flex-col md:flex-row-reverse"
         >
-          <div className="flex justify-center w-5/6">
+          <motion.div
+            initial={{ opacity: 0, scale: 1 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="flex justify-center w-5/6"
+          >
             <img
               src="/images/illustration/hero.svg"
               alt="Logo"
               className="w-full h-auto max-w-6xl min-w-70"
             />
-          </div>
+          </motion.div>
           <div className="gap-3 flex flex-col">
             <h1 className="text-primary font-extrabold lg:text-5xl leading-snug text-3xl lg:leading-snug">
-              Empowering Communication for the Hearing Impaired
+              {title.map((text, i) => (
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: i / 10,
+                  }}
+                  key={i}
+                >
+                  {text}{" "}
+                </motion.span>
+              ))}
             </h1>
             <h4 className="text-body font-medium lg:text-base my-4 text-sm">
-              Visual sound recognition for improved social interactions and
-              independence
+              {subTitle.map((text, i) => (
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: i / 10,
+                  }}
+                  key={i}
+                >
+                  {text}{" "}
+                </motion.span>
+              ))}
             </h4>
             <Link href={"/#about"} className="w-fit mt-2">
-              <button className="bg-primary px-6 py-2 rounded-full text-sm">
+              <motion.button
+                initial={{ opacity: 0, scale: 1 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="bg-primary px-6 py-2 rounded-full text-sm"
+              >
                 Read more
-              </button>
+              </motion.button>
             </Link>
           </div>
         </section>
@@ -285,10 +325,15 @@ export default function Home() {
             Support our colleagues so they can live better in the environment
           </h4>
           <div className="flex flex-row justify-center mt-8">
-            <button className="px-6 bg-primary flex flex-row items-center gap-2 py-2 rounded-full text-sm">
+            <motion.button
+              whileHover={{ scale: 1.2 }}
+              onHoverStart={(e) => {}}
+              onHoverEnd={(e) => {}}
+              className="px-6 bg-primary flex flex-row items-center gap-2 py-2 rounded-full text-sm"
+            >
               <IoLogoGooglePlaystore />
               Google Play
-            </button>
+            </motion.button>
           </div>
         </section>
       </main>

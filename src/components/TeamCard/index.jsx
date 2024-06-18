@@ -1,9 +1,19 @@
 import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function TeamCard({ img, name, position }) {
   return (
-    <div className="group rounded-[10px] border-2 border-gray px-4 pb-10 pt-12 dark:border-strokedark w-60">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.9,
+        delay: 0.5,
+        ease: [0, 0.71, 0.2, 1.01],
+      }}
+      className="group rounded-[10px] border-2 border-gray px-4 pb-10 pt-12 dark:border-strokedark w-60"
+    >
       <div className="relative z-1 mx-auto h-30 w-full max-w-30 rounded-full">
         <Image
           width={500}
@@ -241,6 +251,6 @@ export default function TeamCard({ img, name, position }) {
         <h4 className="mb-0.5 text-lg font-bold text-black">{name}</h4>
         <p className="text-xs font-medium text-body">{position}</p>
       </div>
-    </div>
+    </motion.div>
   );
 }
