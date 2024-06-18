@@ -1,14 +1,13 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function TeamCard({ img, name, position }) {
   return (
-    <div className="group rounded-[10px] border-2 border-gray px-4 pb-10 pt-12 dark:border-strokedark w-64">
+    <div className="group rounded-[10px] border-2 border-gray px-4 pb-10 pt-12 dark:border-strokedark w-60">
       <div className="relative z-1 mx-auto h-30 w-full max-w-30 rounded-full">
         <Image
-          width={120}
-          height={120}
+          width={500}
+          height={500}
           className="object-cover w-40 h-30 rounded-full"
           src={img}
           alt="team"
@@ -239,8 +238,8 @@ export default function TeamCard({ img, name, position }) {
       </div>
 
       <div className="my-5 text-center">
-        <h4 className="mb-0.5 text-xl font-bold text-black">{name}</h4>
-        <p className="text-sm font-medium text-body">{position}</p>
+        <h4 className="mb-0.5 text-lg font-bold text-black">{name}</h4>
+        <p className="text-xs font-medium text-body">{position}</p>
       </div>
     </div>
   );

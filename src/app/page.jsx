@@ -2,9 +2,8 @@
 import FeatureCard from "@/components/FeatureCard";
 import Footer from "@/components/Footer";
 import TeamCard from "@/components/TeamCard";
-import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { IoLogoGooglePlaystore } from "react-icons/io5";
 
 export default function Home() {
@@ -24,12 +23,6 @@ export default function Home() {
       img: "/images/features/deaf-article.jpg",
       title: "Article",
       description: "Contains articles with inspirational stories",
-    },
-    {
-      img: "/images/features/dashboard.png",
-      title: "Admin Dashboard",
-      description:
-        "Easily manage application content data like article and user",
     },
   ];
 
@@ -71,19 +64,48 @@ export default function Home() {
     },
   ];
 
+  const [isNavOpen, setIsNavOpen] = useState(false);
+
+  const handleToggle = () => {
+    setIsNavOpen(!isNavOpen);
+  };
+
   return (
     <React.Fragment>
       <main className="flex min-h-screen flex-col items-center w-full">
         {/* Header */}
-        <div className="flex flex-row justify-between items-center w-full py-4 bg-white px-50 fixed top-0 z-9">
-          <Image
-            width={100}
+        <div className="flex flex-row justify-between items-center w-full py-4 bg-white px-5 md:px-20 lg:px-50 fixed top-0 left-0 z-9">
+          <img
+            width={70}
             height={32}
             src={"/images/logo/logo.png"}
             alt="Logo"
-            priority
           />
-          <ul className="flex flex-row gap-14 font-medium text-body">
+          <button
+            type="button"
+            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            aria-controls="mobile-menu"
+            aria-expanded={isNavOpen}
+            onClick={handleToggle}
+          >
+            <span className="sr-only">Open main menu</span>
+            <svg
+              className="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </button>
+          <ul className="flex-row gap-14 font-medium text-body text-sm hidden md:flex">
             <li>
               <Link href={"/#about"}>About</Link>
             </li>
@@ -97,52 +119,75 @@ export default function Home() {
               <Link href={"/#download"}>Download</Link>
             </li>
           </ul>
+          {isNavOpen && (
+            <div className="absolute top-14 left-0 w-full bg-white border-t border-gray-200 md:hidden">
+              <ul className="flex flex-col p-4 space-y-2 font-medium text-body text-sm">
+                <li>
+                  <Link href={"/#about"} onClick={handleToggle}>
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link href={"/#features"} onClick={handleToggle}>
+                    Features
+                  </Link>
+                </li>
+                <li>
+                  <Link href={"/#teams"} onClick={handleToggle}>
+                    Teams
+                  </Link>
+                </li>
+                <li>
+                  <Link href={"/#download"} onClick={handleToggle}>
+                    Download
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
-        {/* Header */}
+        {/* Hero */}
         <section
           id="hero"
-          className="h-screen flex items-center w-full px-50 justify-between gap-24 bg-white"
+          className="h-screen flex justify-center items-center w-full px-5 md:px-20 lg:px-50 md:justify-between gap-4 lg:gap-24 bg-white flex-col md:flex-row-reverse"
         >
+          <div className="flex justify-center w-5/6">
+            <img
+              src="/images/illustration/hero.svg"
+              alt="Logo"
+              className="w-full h-auto max-w-6xl min-w-70"
+            />
+          </div>
           <div className="gap-3 flex flex-col">
-            <h1 className="text-black font-extrabold text-4xl leading-snug">
-              Hear4U
-            </h1>
-            <h1 className="text-primary font-extrabold text-6xl leading-snug">
+            <h1 className="text-primary font-extrabold lg:text-5xl leading-snug text-3xl lg:leading-snug">
               Empowering Communication for the Hearing Impaired
             </h1>
-            <h4 className="text-body font-medium text-2xl my-4">
+            <h4 className="text-body font-medium lg:text-base my-4 text-sm">
               Visual sound recognition for improved social interactions and
               independence
             </h4>
             <Link href={"/#about"} className="w-fit mt-2">
-              <button className="bg-primary px-8 py-3 rounded-full">
+              <button className="bg-primary px-6 py-2 rounded-full text-sm">
                 Read more
               </button>
             </Link>
           </div>
-          <Image
-            width={600}
-            height={32}
-            src={"/images/illustration/hero.svg"}
-            alt="Logo"
-            priority
-          />
         </section>
         {/* About */}
         <section
           id="about"
-          className="bg-white w-full px-40 text-center py-34 flex justify-center flex-col gap-2"
+          className="bg-white w-full px-5 md:px-20 lg:px-50 text-center py-34 flex justify-center flex-col gap-2"
         >
           <div className="flex w-full justify-center">
-            <div className="border-2 border-gray rounded-lg w-fit px-7 py-1.5">
-              <h2 className="text-primary font-bold text-lg">ABOUT</h2>
+            <div className="border-2 border-gray rounded-lg w-fit px-5 py-1.5">
+              <h2 className="text-primary font-bold text-sm">ABOUT</h2>
             </div>
           </div>
-          <h4 className="text-black font-bold text-3xl mt-3">
+          <h4 className="text-black font-bold text-2xl mt-3">
             Find out more about our application
           </h4>
-          <div className="flex justify-center mt-14 flex-col items-center text-center text-body text-lg">
-            <p className="w-180">
+          <div className="flex justify-center mt-14 flex-col items-center text-center text-body text-sm leading-relaxed">
+            <p className="md:w-180 w-70">
               At Hear4U, we are dedicated to enhancing the lives of individuals
               with hearing disabilities who face challenges in identifying and
               responding to environmental sounds. Recognizing that hearing aids
@@ -154,7 +199,7 @@ export default function Home() {
               improving their social interactions and daily activities.
             </p>
             <br />
-            <p className="w-180">
+            <p className="md:w-180 w-70">
               Our mission is to empower those who are hard of hearing to
               communicate more effectively and interact actively with their
               environment. By creating an intuitive and easy-to-use tool, Hear4U
@@ -164,7 +209,7 @@ export default function Home() {
               activities and social interactions.
             </p>
             <br />
-            <p className="w-180">
+            <p className="md:w-180 w-70">
               Through our research, we address key questions such as developing
               a tool that detects sound types easily and accurately, ensuring
               the app’s accessibility and usability for a wide range of people
@@ -178,45 +223,45 @@ export default function Home() {
         {/* Features */}
         <section
           id="features"
-          className="bg-white w-full px-40 text-center py-14 flex justify-center flex-col gap-2 pb-30"
+          className="bg-white w-full px-5 md:px-20 lg:px-50 text-center py-34 flex justify-center flex-col gap-2"
         >
           <div className="flex w-full justify-center">
-            <div className="border-2 border-gray rounded-lg w-fit px-7 py-1.5">
-              <h2 className="text-primary font-bold text-lg">FEATURES</h2>
+            <div className="border-2 border-gray rounded-lg w-fit px-5 py-1.5">
+              <h2 className="text-primary font-bold text-sm">FEATURES</h2>
             </div>
           </div>
-          <h4 className="text-black font-bold text-3xl mt-3">
+          <h4 className="text-black font-bold text-2xl mt-3">
             Innovative Tools for Enhanced Social Engagement
           </h4>
-          <div className="flex justify-center items-center mt-14">
-            <div className="grid grid-cols-1 lg:grid-cols-2 mt-8 gap-12 w-2/3">
-              {cardData.map((data, i) => (
-                <FeatureCard
-                  title={data.title}
-                  description={data.description}
-                  img={data.img}
-                  key={i}
-                />
-              ))}
-            </div>
+          <div className="flex justify-center items-center mt-14 flex-wrap flex-row gap-6">
+            {/* <div className="grid grid-cols-1 lg:grid-cols-2 mt-8 gap-12 w-2/3"> */}
+            {cardData.map((data, i) => (
+              <FeatureCard
+                title={data.title}
+                description={data.description}
+                img={data.img}
+                key={i}
+              />
+            ))}
+            {/* </div> */}
           </div>
         </section>
         {/* Teams */}
         <section
           id="teams"
-          className="bg-white w-full px-40 text-center py-28 flex justify-center flex-col gap-2"
+          className="bg-white w-full px-5 md:px-20 lg:px-50 text-center py-34 flex justify-center flex-col gap-2"
         >
           <div className="flex w-full justify-center">
-            <div className="border-2 border-gray rounded-lg w-fit px-7 py-1.5">
-              <h2 className="text-primary font-bold text-lg">TEAMS</h2>
+            <div className="border-2 border-gray rounded-lg w-fit px-5 py-1.5">
+              <h2 className="text-primary font-bold text-sm">TEAMS</h2>
             </div>
           </div>
-          <h4 className="text-black font-bold text-3xl mt-3">
+          <h4 className="text-black font-bold text-2xl mt-3">
             Dedicated Students Committed to Improving Lives
           </h4>
           <div className="mx-auto w-full max-w-[1170px] mt-14">
             {/* <div className="grid grid-cols-1 gap-7.5 sm:grid-cols-2 xl:grid-cols-4 mt-8"> */}
-            <div className="flex flex-row flex-wrap mt-14 gap-6 justify-center">
+            <div className="flex flex-row flex-wrap gap-6 justify-center">
               {teamItems.map((data, i) => (
                 <TeamCard
                   name={data.name}
@@ -231,16 +276,16 @@ export default function Home() {
         {/* Download */}
         <section
           id="download"
-          className="bg-white w-full pt-50 pb-80 text-center flex justify-center flex-col gap-2"
+          className="bg-white w-full px-5 pt-50 pb-80 text-center flex justify-center flex-col gap-2"
         >
-          <h4 className="text-black font-bold text-3xl mt-3">
+          <h4 className="text-black font-bold text-2xl md:text-3xl mt-3">
             Download Hear4U now
           </h4>
-          <h4 className="text-body font-normal text-xl mt-3">
+          <h4 className="text-body font-normal text-sm md:text-xl mt-3">
             Support our colleagues so they can live better in the environment
           </h4>
           <div className="flex flex-row justify-center mt-8">
-            <button className="px-6 bg-primary flex flex-row items-center gap-2 py-2.5 rounded-full">
+            <button className="px-6 bg-primary flex flex-row items-center gap-2 py-2 rounded-full text-sm">
               <IoLogoGooglePlaystore />
               Google Play
             </button>

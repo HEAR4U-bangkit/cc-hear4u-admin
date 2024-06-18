@@ -4,19 +4,19 @@ import React from "react";
 export default function FeatureCard({ img, title, description }) {
   return (
     <React.Fragment>
-      <div className="flex flex-col bg-white border-2 border-gray rounded-xl md:flex-row md:max-w-xl">
+      <div className="flex flex-col bg-white border-2 border-gray rounded-xl lg:flex-row lg:max-w-xl w-2/3 lg:w-2/5">
         <Image
-          className="object-cover w-full h-48 rounded-t-xl md:h-46 md:w-40 md:rounded-none md:rounded-s-xl"
+          className="object-cover w-full h-48 rounded-t-xl lg:h-46 lg:w-40 lg:rounded-none lg:rounded-s-xl"
           src={img}
           alt="feature"
-          width={220}
-          height={280}
+          width={400}
+          height={320}
         />
         <div className="flex flex-col p-6 leading-normal text-start">
-          <h5 className="text-2xl font-bold tracking-tight text-black">
+          <h5 className="text-xl font-bold tracking-tight text-black">
             {title}
           </h5>
-          <p className="mt-2 font-normal text-body">{description}</p>
+          <p className="mt-2 font-normal text-body text-sm">{description}</p>
         </div>
       </div>
     </React.Fragment>
