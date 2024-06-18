@@ -9,7 +9,7 @@ export default function TeamCard({ img, name, position }) {
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{
         duration: 0.9,
-        delay: 0.5,
+        delay: 0.2,
         ease: [0, 0.71, 0.2, 1.01],
       }}
       className="group rounded-[10px] border-2 border-gray px-4 pb-10 pt-12 dark:border-strokedark w-60"

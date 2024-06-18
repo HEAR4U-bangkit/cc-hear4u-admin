@@ -10,7 +10,7 @@ export default function FeatureCard({ img, title, description }) {
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{
           duration: 0.9,
-          delay: 0.5,
+          delay: 0.2,
           ease: [0, 0.71, 0.2, 1.01],
         }}
         className="flex flex-col bg-white border-2 border-gray rounded-xl lg:flex-row lg:max-w-xl w-2/3 lg:w-2/5"
