@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Hear4U",
+  description: "Bridging to Interact with the World",
 };
 
 export default function RootLayout({ children }) {
