@@ -208,7 +208,7 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 1 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
-                className="bg-primary px-6 py-2 rounded-full text-sm"
+                className="bg-primary px-6 py-2 rounded-full text-sm text-white"
               >
                 Read more
               </motion.button>
@@ -331,7 +331,7 @@ export default function Home() {
               whileHover={{ scale: 1.2 }}
               onHoverStart={(e) => {}}
               onHoverEnd={(e) => {}}
-              className="px-6 bg-primary flex flex-row items-center gap-2 py-2 rounded-full text-sm"
+              className="px-6 bg-primary text-white flex flex-row items-center gap-2 py-2 rounded-full text-sm"
             >
               <IoLogoGooglePlaystore />
               Google Play
