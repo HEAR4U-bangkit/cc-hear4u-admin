@@ -1,4 +1,4 @@
-# Hear4U Web
+# Hear4U Website
 This repository contains the admin and landing page website code for manage application data and display information about the application.
 
 ## Deployed Link
