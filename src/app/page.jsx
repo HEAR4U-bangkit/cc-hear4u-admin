@@ -82,12 +82,14 @@ export default function Home() {
       <main className="flex min-h-screen flex-col items-center w-full">
         {/* Header */}
         <div className="flex flex-row justify-between items-center w-full py-4 bg-white px-5 md:px-20 lg:px-50 fixed top-0 left-0 z-9">
-          <img
-            width={70}
-            height={32}
-            src={"/images/logo/logo.png"}
-            alt="Logo"
-          />
+          <Link href={"/#hero"}>
+            <img
+              width={70}
+              height={32}
+              src={"/images/logo/logo.png"}
+              alt="Logo"
+            />
+          </Link>
           <button
             type="button"
             className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
